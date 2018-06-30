@@ -8,13 +8,13 @@ const ytdl = require('ytdl-core');
 const request = require('request');
 const devs = ['458674485533343745','458674485533343745'];
 const child_process = require("child_process");
-const adminprefix = "1";
+const adminprefix = "Z";
 const fs = require('fs');
 const getYoutubeID = require('get-youtube-id');
 const fetchVideoInfo = require('youtube-info');
 
 const yt_api_key = "AIzaSyDeoIH0u1e72AtfpwSKKOSy3IPp2UHzqi4";
-const prefix = '1';
+const prefix = 'Z';
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
