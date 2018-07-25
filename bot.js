@@ -33,7 +33,7 @@ bot.on('message',async message => {
   let mention = message.mentions.members.first();
   let role = message.content.split(" ").slice(2).join(" ");
   let mySupport = message.guild.roles.find('name',role);
-  let acRoom = bot.channels.get('467362608157032458');
+  let acRoom = bot.channels.get('471450744898453512');
   if(message.content.startsWith(prefix + "قبول")) {
     if(message.guild.id !== '429714205294460930') return;
     if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
@@ -74,7 +74,7 @@ message.channel.sendEmbed(embed);
 });
 bot.on('message',async message => {
   let mention = message.mentions.members.first();
-  let acRoom = bot.channels.get('467362608157032458');
+  let acRoom = bot.channels.get('471450744898453512');
   if(message.content.startsWith(prefix + "رفض")) {
   if(message.guild.id !== '429714205294460930') return;
   if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return;
@@ -108,7 +108,7 @@ ${text}
   تم التقديم بواسطة :<@${message.author.id}>
 `)
 
-   bot.channels.get("467362408399110160").sendEmbed(embed);
+   bot.channels.get("471450532905484331").sendEmbed(embed);
 
               })
             }
