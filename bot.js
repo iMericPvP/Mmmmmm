@@ -28,6 +28,17 @@ bot.user.setGame(` ARAB SHOP `,"http://twitch.tv/S-F")
 bot.user.setStatus("dnd")
 });
 
+bot.on('message', message => {
+              if (!message.channel.guild) return;
+      if(message.content =='-count')
+      var IzRo = new Discord.RichEmbed()
+      .setThumbnail(message.author.avatarURL)
+      .setFooter(message.author.username, message.author.avatarURL)
+      .setTitle('🌷| Members info')
+      .addBlankField(true)
+      .addField('عدد اعضاء السيرفر',`${message.guild.memberCount}`)
+      message.channel.send(IzRo);
+    });
 
 bot.on('message',async message => {
   let mention = message.mentions.members.first();
