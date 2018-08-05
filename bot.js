@@ -5,6 +5,10 @@ const client = new Discord.Client();
 const jimp = require('jimp');   
 const fs = require("fs");
 const dateFormat = require("dateformat");
+const googl = require('goo.gl');  
+const translate = require('google-translate-api');   
+const google = require('google-it'); 
+
 console.log("BOT ONLINE");
 
 var prefix = "$";
@@ -751,6 +755,130 @@ m.sendMessage(args)
 }
 });
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  client.on('message', message => {
+    if (message.content.startsWith("$tr")) {
+
+        const translate = require('google-translate-api');
+        const Discord = require('discord.js');
+
+    let toTrans = message.content.split(' ').slice(1);
+    let language;
+
+    language = toTrans[toTrans.length - 2] === 'to' ? toTrans.slice(toTrans.length - 2, toTrans.length)[1].trim() : undefined;
+    if (!language) {
+        return message.reply(`**من فضلك قم باستخدام . \`$tr [الكلمه] to [اللغه]\`**`);
+    }
+    let finalToTrans = toTrans.slice(toTrans.length - toTrans.length, toTrans.length - 2).join(' ');
+    translate(finalToTrans, {to: language}).then(res => {
+            message.channel.send({embed: {
+                color: 3447003,
+                author: {
+                  name: 'S Bot translate',
+                  icon_url: client.user.avatarURL
+                },
+                fields: [{
+                    name: "تم الترجمه",
+                    value: `**من:** ${res.from.language.iso}\n\`\`\`${finalToTrans}\`\`\`\n**الي: **${language}\n\`\`\`${res.text}\`\`\``
+                  }
+                ],
+                timestamp: new Date(),
+                footer: {
+                  icon_url: client.user.avatarURL,
+                  text: "Cozmo Bot"
+                }
+              }
+            });
+    }).catch(err => {
+        message.channel.send({
+            embed: {
+                description: '❌  لم استطيع العثور علي اللغة المطلوبه',
+                color: 0xE8642B
+            }
+        });
+    });
+    }
+});
+
+
+
+
+
+
+
+client.on('message', message => { 
+
+ let args = message.content.split(' ').slice(1);
+    if(message.content.startsWith(prefix + 'short')) {
+    if(!message.channel.guild) return;  
+
+        googl.setKey('AIzaSyC2Z2mZ_nZTcSvh3QvIyrmOIFP6Ra6co6w');
+        googl.getKey();
+        googl.shorten(args.join(' ')).then(shorturl => {
+            message.channel.send(''+shorturl)
+        }).catch(e=>{
+            console.log(e.message);
+            message.channel.send('Error!');
+        });
+}
+});
+
+
+
+
+
+
+
+
+
+
+
+client.on('message', message => {
+           var currentTime = new Date(),
+           hours = currentTime.getHours() + 0 ,
+           minutes = currentTime.getMinutes(),
+           seconds = currentTime.getSeconds(),
+           years = currentTime.getFullYear(),
+           month = currentTime.getMonth() + 1,
+           day = currentTime.getDate(),
+           week = currentTime.getDay();
+      
+            
+
+           if (minutes < 10) {
+               minutes = "0" + minutes;
+           }
+           var suffix = "AM";
+           if (hours >= 12) {
+               suffix = "PM";
+               hours = hours - 12;
+           }
+           if (hours == 0) {
+               hours = 12;
+           }
+               if(message.content.startsWith('$time')) {
+                   const embed = new Discord.RichEmbed()
+          .addField(`🕐 Time `,` ** 「  ${hours} : ${minutes} : ${suffix} 」**`)
+.addField(` :satellite: Date `,`**「 ${years} : ${month} : ${day} 」**`)
+
+          
+message.channel.send(embed)
+}
+});   
 
 
 client.login(process.env.BOT_TOKEN);
