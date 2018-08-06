@@ -788,7 +788,7 @@ m.sendMessage(args)
             message.channel.send({embed: {
                 color: 3447003,
                 author: {
-                  name: 'S Bot translate',
+                  name: 'Cozmo translate',
                   icon_url: client.user.avatarURL
                 },
                 fields: [{
