@@ -884,58 +884,128 @@ message.channel.send(embed)
 
 
 
+    
+client.on("guildMemberAdd", member => {
+      let welcomer = member.guild.channels.find("name","welcome");
+      //*let welcomer = member.guild.channels.find("name","welcome");
+      if(!welcomer) return;
+      if(welcomer) {
+      
+         
+       var Canvas = require('canvas')
+      var jimp = require('jimp')
+      
+      const w = ['./img/20180806_230413.png'];
+      
+              let Image = Canvas.Image,
+                  canvas = new Canvas(557, 241),
+                  ctx = canvas.getContext('2d');
+  
+              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
+                  if (err) return console.log(err)
+                  let BG = Canvas.Image;
+                  let ground = new Image;
+                  ground.src = Background;
+                  ctx.drawImage(ground, 0, 0, 557, 241);
+      
+      })
+      
+                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
+                      jimp.read(url, (err, ava) => {
+                          if (err) return console.log(err);
+                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
+                              if (err) return console.log(err);
+      
+                                    ctx.font = '25px Arial Bold';
+                              ctx.fontSize = '20px';
+                              ctx.fillStyle = "#FFFFFF";
+                                ctx.fillText(member.user.username, 300, 120);
+                              
+                              //NAMEً
+                              ctx.font = '25px Arial';
+                              ctx.fontSize = '28px';
+                              ctx.fillStyle = "#FFFFFF";
+      ctx.fillText(`Welcome To ${member.guild.name}`, 300, 60);
+      
+               //AVATARً
+                              let Avatar = Canvas.Image;
+                              let ava = new Avatar;
+                              ava.src = buf;
+                              ctx.beginPath();
+                 ctx.arc(149, 118, 97, 0, Math.PI*2, true);
+                   ctx.closePath();
+                   
+                                 ctx.clip();
 
+                        ctx.drawImage(ava, 49, 17, 200, 200);
+                              ctx.closePath();
+    welcomer.sendFile(canvas.toBuffer())
+      
 
-client.on('message', msg => {
-  if (msg.author.bot) return;
-  if (!msg.content.startsWith(prefix)) return;
-  let command = msg.content.split(" ")[0];
-  command = command.slice(prefix.length);
-  let args = msg.content.split(" ").slice(1);
-
-    if(command === "مسح") {
-        const emoji = client.emojis.find("name", "wastebasket")
-    let textxt = args.slice(0).join("");
-    if(msg.member.hasPermission("MANAGE_MESSAGES")) {
-    if (textxt == "") {
-        msg.delete().then
-    msg.channel.send("***``ضع عدد الرسائل التي تريد مسحها 👌``***").then(m => m.delete(3000));
-} else {
-    msg.delete().then
-    msg.delete().then
-    msg.channel.bulkDelete(textxt);
-        msg.channel.send("``php\nعدد الرسائل التي تم مسحها: " + textxt + "\n``").then(m => m.delete(3000));
-        }    
-    }
+      
+      })
+      })
+      
+      }
+      });
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      var dat = JSON.parse("{}");
+function forEachObject(obj, func) {
+    Object.keys(obj).forEach(function (key) { func(key, obj[key]) })
 }
+client.on("ready", () => {
+    var guild;
+    while (!guild)
+        guild = client.guilds.find("name", "Cozmo  Support")
+    guild.fetchInvites().then((data) => {
+        data.forEach((Invite, key, map) => {
+            var Inv = Invite.code;
+            dat[Inv] = Invite.uses;
+        })
+    })
+})
+client.on("guildMemberAdd", (member) => {
+    let channel = member.guild.channels.find('name', 'welcome');
+    if (!channel) {
+        console.log("!channel fails");
+        return;
+    }
+    if (member.id == client.user.id) {
+        return;
+    }
+    console.log('made it till here!');
+    var guild;
+    while (!guild)
+        guild = client.guilds.find("name", "Cozmo  Support")
+    guild.fetchInvites().then((data) => {
+        data.forEach((Invite, key, map) => {
+            var Inv = Invite.code;
+            if (dat[Inv])
+                if (dat[Inv] < Invite.uses) {
+                    console.log(3);
+                    console.log(`${member} joined over ${Invite.inviter}'s invite ${Invite.code}`)
+ channel.send(` ♥ **تم دعوته من قبل ${Invite.inviter} ♥ `)    
+             dat[Inv] = Invite.uses;
+          var h = member.user;
+       
+      
+
+
+      }
+        });
+    });
 });
 
-client.on('message', message => {
-        let reason = message.content.split(" ").slice(2).join(" ")
-        let muterole = message.guild.roles.find("name", "muted")
-        let men = message.mentions.users.first()
 
-        if(message.content.startsWith(prefix + "اسكت")) {
-            if(!men) return message.channel.send("**لا يمكنك اسكت نفسك `**");
-            if(!reason) return message.channel.send("**يجب ذكر السبب  **`")
-            if(!muterole) {
-                message.guild.createRole({name: "muted", color:"#505f74", permissions: [1115136]})
 
-            }
-            message.guild.member(men).addRole(muterole)
-                message.channel.send("**" + men.username + " has تم ألاسكات :zipper_mouth:**")
-        }
 
-        if(message.content.startsWith(prefix + "تكلم")) {
-            if(!men) return message.channel.send("**منشن الشخص الذي تريد الفك عنه`**");
-
-            if(!muterole) {
-                message.guild.createRole({name: "muted", color:"#505f74", permissions: [1115136]})
-
-            }
-            message.guild.member(men).removeRole(muterole)
-                message.channel.send("**" + men.username + " تم فك لميوت 😀 **")
-        }
-    })
 
 client.login(process.env.BOT_TOKEN);
