@@ -8,6 +8,7 @@ const dateFormat = require("dateformat");
 const googl = require('goo.gl');  
 const translate = require('google-translate-api');   
 const google = require('google-it'); 
+const moment = require('moment'); 
 
 console.log("BOT ONLINE");
 
