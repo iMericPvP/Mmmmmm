@@ -451,7 +451,7 @@ $rerole - لآزالة الرتبة من أحد الاعضاء
 $setvoice -   لعمل روم الفويس أونلاين  
 $giveaway - قيف اواي :tada:
 $setvoice - لعمل روم بآالمتصلين بالصوت في السيرفر :telephone_receiver: 
-
+$setwelcomer - لوضع شات لترحيب
 
             bot info       
 $inv - لدعوة البوت :pen_fountain: 
