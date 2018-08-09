@@ -930,7 +930,8 @@ client.on("guildMemberAdd", (member) => {
                 if (dat[Inv] < Invite.uses) {
                     console.log(3);
                     console.log(`${member} joined over ${Invite.inviter}'s invite ${Invite.code}`)
- channel.send(` ♥ **تم دعوته من قبل ${Invite.inviter} ♥ `)    
+ channel.send(`  *** Welcome : *** ${member}
+*** Join By : ***  ${Invite.inviter}  `)    
              dat[Inv] = Invite.uses;
           var h = member.user;
        
