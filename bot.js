@@ -1,19 +1,34 @@
 
 
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const jimp = require('jimp');   
-const fs = require("fs");
-const dateFormat = require("dateformat");
+const Discord = require('discord.js');
+const devs = ['389090790984515594','350408440566382592'];
+const adminprefix = "!"
+const db = require('quick.db');
+const client = new Discord.Client();   
 const googl = require('goo.gl');  
 const translate = require('google-translate-api');   
+const fs = require("fs"); 
+const canvas = require("canvas");
+const getYoutubeID = require('get-youtube-id'); 
+const moment = require("moment");  
+const { Client, Util } = require('discord.js');  
+const ms = require("ms");
+
+const UserBlocked = new Set(); 
+const jimp = require('jimp');   
+const math = require('math-expression-evaluator'); 
+const stripIndents = require('common-tags').stripIndents;
 const google = require('google-it'); 
-const moment = require('moment'); 
+const queue = new Map(); 
+const fetchVideoInfo = require('youtube-info');
+const YouTube = require('simple-youtube-api');
+const ytdl = require('ytdl-core');
+const youtube = new YouTube("AIzaSyAdORXg7UZUo7sePv97JyoDqtQVi3Ll0b8");
+const sql = require("sqlite");
+ const dateFormat = require('dateformat'); 
+ const pretty = require('pretty-ms') 
 
-console.log("BOT ONLINE");
-
-var prefix = "$";
-
+var prefix = "$"
 
 
 client.on('message', message => { // Leaked by [ @! Abdulrhman#1001, @! KiNg66S.❤#8047 ]
@@ -395,7 +410,7 @@ message.channel.send(id)
      let embed = new Discord.RichEmbed()
   .setAuthor(message.author.username)
   .setColor("#9B59B6")
-  .addField(" ** :gear: Server Support :gear: **" , "  **https://discord.gg/HQjt6nZ**")
+  .addField(" ** :gear: Server Support :gear: **" , "  **https://discord.gg/M3vsUp8**")
      
      
   message.channel.sendEmbed(embed);
@@ -726,7 +741,7 @@ client.on('message', message => {
   New Server Add Cozmo Bot ✅
 اسم السيرفر: ${guild.name}
 صاحب السيرفر: ${guild.owner}**`);
-client.channels.get("474983791362834444").sendEmbed(embed)
+client.channels.get("477397641689300992").sendEmbed(embed)
 });
 client.on('guildDelete', guild => {
          const embed = new Discord.RichEmbed()
@@ -737,27 +752,14 @@ client.on('guildDelete', guild => {
   Server Kicked Cozmo Bot :cry:
 اسم السيرفر: ${guild.name}
 صاحب السيرفر: ${guild.owner}**`);
-client.channels.get("474983791362834444").sendEmbed(embed)
+client.channels.get("477397641689300992").sendEmbed(embed)
 });
  
  
  
  
  
- 
-  client.on('message', message => {
-            if(!message.channel.guild) return;
-let args = message.content.split(' ').slice(1).join(' ');
-if (message.content.startsWith('>bcall')){
- if (message.author.id !== '463857132060540958') return message.reply('** هذا الأمر قفط لصاحب البوت و شكراًً **')
- if(!message.author.id === '463857132060540958') return;
-message.channel.sendMessage('جار ارسال الرسالة |✅')
-client.users.forEach(m =>{
-m.sendMessage(args)
-})
-}
-});
-  
+
 
 
 
@@ -896,56 +898,6 @@ message.channel.send(embed)
       
       
       
-      var dat = JSON.parse("{}");
-function forEachObject(obj, func) {
-    Object.keys(obj).forEach(function (key) { func(key, obj[key]) })
-}
-client.on("ready", () => {
-    var guild;
-    while (!guild)
-        guild = client.guilds.find("name", "Cozmo  Support")
-    guild.fetchInvites().then((data) => {
-        data.forEach((Invite, key, map) => {
-            var Inv = Invite.code;
-            dat[Inv] = Invite.uses;
-        })
-    })
-})
-client.on("guildMemberAdd", (member) => {
-    let channel = member.guild.channels.find('name', 'welcome');
-    if (!channel) {
-        console.log("!channel fails");
-        return;
-    }
-    if (member.id == client.user.id) {
-        return;
-    }
-    console.log('made it till here!');
-    var guild;
-    while (!guild)
-        guild = client.guilds.find("name", "Cozmo  Support")
-    guild.fetchInvites().then((data) => {
-        data.forEach((Invite, key, map) => {
-            var Inv = Invite.code;
-            if (dat[Inv])
-                if (dat[Inv] < Invite.uses) {
-                    console.log(3);
-                    console.log(`${member} joined over ${Invite.inviter}'s invite ${Invite.code}`)
- channel.send(`  *** Welcome : *** ${member}
-*** Join By : ***  ${Invite.inviter}  `)    
-             dat[Inv] = Invite.uses;
-          var h = member.user;
-       
-      
-
-
-      }
-        });
-    });
-});
-
-
-
 
 
 client.login(process.env.BOT_TOKEN);
