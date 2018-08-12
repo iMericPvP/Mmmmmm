@@ -918,7 +918,7 @@ client.on('message',async message => {
   seconds = seconds > 9 ? seconds : '0' + seconds
   return `${days > 0 ? `${days}:` : ''}${(hours || days) > 0 ? `${hours}:` : ''}${minutes}:${seconds}`
   };
-  if(message.content.startsWith( "prefix + bot")) {
+  if(message.content.startsWith( prefix + "bot")) {
     const millis = new Date().getTime() - client.user.createdAt.getTime();
     const noww = new Date();
     dateFormat(noww, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
