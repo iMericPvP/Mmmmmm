@@ -327,39 +327,7 @@ message.channel.send(`**:white_check_mark: ${user.tag} banned from the server ! 
 
 
 
-function timeCon(time) {
-    let days = Math.floor(time % 31536000 / 86400)
-    let hours = Math.floor(time % 31536000 % 86400 / 3600)
-    let minutes = Math.floor(time % 31536000 % 86400 % 3600 / 60)
-    let seconds = Math.round(time % 31536000 % 86400 % 3600 % 60)
-    days = days > 9 ? days : '0' + days
-    hours = hours > 9 ? hours : '0' + hours
-    minutes = minutes > 9 ? minutes : '0' + minutes
-    seconds = seconds > 9 ? seconds : '0' + seconds
-    return `${days > 0 ? `${days}:` : ''}${(hours || days) > 0 ? `${hours}:` : ''}${minutes}:${seconds}`
-}
-client.on('message', message => {
-    if (message.content.startsWith("$bot")) {
-    message.channel.send({
-        embed: new Discord.RichEmbed()
-            .setAuthor(client.user.username,client.user.avatarURL)
-            .setThumbnail(client.user.avatarURL)
-            .setColor('RANDOM')
-            .setTitle('``معلومات  Cozmo bot `` ')
-            .addField('``وقت لتشغيل``', [timeCon(process.uptime())], true)
-            .addField('``سرعة البوت``' , [`${Date.now() - message.createdTimestamp}` + 'MS'], true)
-            .addField('``مساحة البوت``', `[${(process.memoryUsage().rss / 1048576).toFixed()}MB]`, true)
-            .addField('``سيرفرات البوت``', [client.guilds.size], true)
-            .addField('``رومات البوت``' , `[ ${client.channels.size} ]` , true)
-            .addField('``مستخدمين البوت``' ,`[ ${client.users.size} ]` , true)
-            .addField('``أسم البوت``' , `[ ${client.user.tag} ]` , true)
-            .addField('``أيدي البوت``' , `[ ${client.user.id} ]` , true)
-                  .addField('``ألبرفكس``' , `$` , true)
-                  .addField('``لغه لبؤت``' , `[ Java Script ]` , true)
-                  .setFooter('By | Noor Alhussein ')
-    })
-}
-});
+
   function timeCon(time) {
     let days = Math.floor(time % 31536000 / 86400)
     let hours = Math.floor(time % 31536000 % 86400 / 3600)
@@ -543,20 +511,19 @@ if(ra3d.content.startsWith(prefix + 'ccolors')) {
        
        
        
-       
-       client.on('message', message => {
-    if (message.content === "$channels") {
-        if (message.author.bot) return
-                      if (!message.guild) return;
-
-        var channels = message.guild.channels.map(channels => `${channels.name}, `).join(' ')
-        const embed = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .addField(`${message.guild.name}`,`**Rooms:white_check_mark:**`)
-        .addField(':arrow_down: Rooms Number. :heavy_check_mark:',`** ${message.guild.channels.size}**`)
-        
-.addField(':arrow_down:Rooms  Name. :heavy_check_mark::',`**[${channels}]**`)
-        message.channel.sendEmbed(embed);
+      client.on('message',async message =>{ 
+    if(message.content.startsWith(prefix + "channels")) {
+        let i = 1;
+        let embed = new Discord.RichEmbed()
+        .setAuthor(message.author.username, message.author.avatarURL)
+        .setTitle(message.guild.name)
+        .setThumbnail(message.guild.iconURL)
+        .setDescription(message.guild.channels.map(c => `\`${i++}\` - **${c.name}**`))
+        .setFooter(message.guild.channels.size + ' Channels in the server!');
+        message.channel.send(embed).then(msg => {
+            msg.delete(25000);
+            message.delete(25000);
+        });
     }
 });
 
