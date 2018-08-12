@@ -889,13 +889,87 @@ message.channel.send(embed)
 
 
 
+
+
+
+client.on('message', message => {
+   let args = message.content.split(" ").slice(1);
+  if (message.content.startsWith(prefix + "search")) {
+let Embed = new Discord.RichEmbed()
+        .setColor(0x36393e);
+    if (!args[0]) {
+        Embed.setFooter(`**للأستعمال : $search [ Letter ].**`);
+        return message.channel.send(Embed); 
+    }
+
+    if (args[0].length <= 1) {
+        Embed.setFooter(`للأستعمال : $search [ Letter ].`);
+        return message.channel.send(Embed); 
+    }
+    let array = []; 
+    let number = 0; 
+    message.guild.members.map(m => { 
+        if (m.user.username.toUpperCase().includes(args[0].toUpperCase())) { 
+            number++; 
+            array.push(`${number}. ${m.user.username}`); 
+        }
+    });
+    Embed.setTitle(`نتائج البحث عن : "${args[0]}"`);
+    Embed.setDescription(`\`\`\`${array.slice(0, 30).join(`\n`)}\`\`\``);
+
+    message.channel.send(Embed);
+   
+   }
+}); 
+
+
+
+
+
+
+
+
+
+
+
     
 
       
       
       
       
-
+const hero = new Discord.Client();
+client.on('message',async message => {
+  function timeCon(time) {
+  let days = Math.floor(time % 31536000 / 86400)
+  let hours = Math.floor(time % 31536000 % 86400 / 3600)
+  let minutes = Math.floor(time % 31536000 % 86400 % 3600 / 60)
+  let seconds = Math.round(time % 31536000 % 86400 % 3600 % 60)
+  days = days > 9 ? days : '0' + days
+  hours = hours > 9 ? hours : '0' + hours
+  minutes = minutes > 9 ? minutes : '0' + minutes
+  seconds = seconds > 9 ? seconds : '0' + seconds
+  return `${days > 0 ? `${days}:` : ''}${(hours || days) > 0 ? `${hours}:` : ''}${minutes}:${seconds}`
+  };
+  if(message.content.startsWith( "prefix + bot")) {
+    const millis = new Date().getTime() - client.user.createdAt.getTime();
+    const noww = new Date();
+    dateFormat(noww, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
+    const createdAT = millis / 1000 / 60 / 60 / 24;
+    var iMs = new Discord.RichEmbed()
+    .setAuthor(client.user.username, client.user.avatarURL)
+    .setTitle(`${client.user.username} معلومات عن بوت`)
+    .setColor('#36393e')
+    .addField('🌟 امر البوت', prefix, true)
+    .addField('🌟 الرامات المستخدمة', `${(process.memoryUsage().rss / 1048576).toFixed()} ميجا بايت`,true)
+    .addField('🌟 سرعة البوت', `${Math.round(client.ping)} ملي سكند`,true)
+    .addField('🌟 تم تشغيل البوت منذ', `${timeCon(process.uptime())}`, true)
+    .addField('🌟 السيرفرات', client.guilds.size,true)
+    .addField('🌟 المستخدمين', client.users.size,true)
+    .setFooter(`${client.user.username} :: ${new Date().toLocaleString()}`);
+    message.channel.send(iMs);
+  }
+});
 
 
 client.login(process.env.BOT_TOKEN);
