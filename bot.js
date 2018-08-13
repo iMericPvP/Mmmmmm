@@ -1,8 +1,7 @@
 
 
 const Discord = require('discord.js');
-const devs = ['389090790984515594','350408440566382592'];
-const adminprefix = "!"
+
 const db = require('quick.db');
 const client = new Discord.Client();   
 const googl = require('goo.gl');  
@@ -20,11 +19,7 @@ const math = require('math-expression-evaluator');
 const stripIndents = require('common-tags').stripIndents;
 const google = require('google-it'); 
 const queue = new Map(); 
-const fetchVideoInfo = require('youtube-info');
-const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const youtube = new YouTube("AIzaSyAdORXg7UZUo7sePv97JyoDqtQVi3Ll0b8");
-const sql = require("sqlite");
  const dateFormat = require('dateformat'); 
  const pretty = require('pretty-ms') 
 
@@ -36,89 +31,6 @@ var prefix = "$"
 
 
 
-
-
-
-const temp = {};
-client.on('message', async message => {
-if(message.channel.type === "dm") return;
-if(message.author.bot) return;
-  if(!temp[message.guild.id]) temp[message.guild.id] = {
-	time: "3000",
-	category : 'لانشاء روم باسمك',
-	channel : 'لانشاء روم باسمك'
-}
-      if(message.content.startsWith('$temp on')){
-          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-  var ggg= message.guild.createChannel('لانشاء روم باسمك', 'category').then(cg => {
-   var ccc =message.guild.createChannel('لانشاء روم باسمك', 'voice').then(ch => {
-        ch.setParent(cg)
-    message.channel.send('**Done ,**')
-client.on('message' , message => {
- if(message.content === '$temp off') {
-     if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-cg.delete()
-ch.delete()
-message.channel.send('**Done ,**')
-}
-});
-const time = temp[message.guild.id].time
-client.on('message' , message => {
-  if (message.content.startsWith(prefix + "temptime")) {
-    if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
-    let newTime= message.content.split(' ').slice(1).join(" ")
-    if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
-	if(isNaN(newTime)) return message.reply(`** The Time Be Nambers :face_palm: **`);
-	if(newTime < 1) return message.reply(`**The Time Be Up \`3000s\`**`)
-    temp[message.guild.id].time = newTime
-    message.channel.send(`**Temp Rooms Time Change To \`${newTime}\`**`);
-  }
-});
-    client.on('voiceStateUpdate', (old, neww) => {
-    let newUserChannel = neww.voiceChannel
-    let oldUserChannel = old.voiceChannel
-    temp[message.guild.id].category = cg.id
-    temp[message.guild.id].channel = ch.id
-    let channel = temp[message.guild.id].channel
-    let category = temp[message.guild.id].category
-    if(oldUserChannel === undefined && newUserChannel !== undefined && newUserChannel.id == channel) {
-        neww.guild.createChannel(neww.displayName , 'voice').then(c => {
-            c.setParent(category)
-  let scan = setTimeout(()=>{
-if(!neww.voiceChannel) {
-  c.delete();
-  client.channels.get(channel).overwritePermissions(neww, {
-										CONNECT:true,
-							             SPEAK:true
-		})
-}
-  }, temp[neww.guild.id].time);
-						 			 c.overwritePermissions(neww, {
-										 CONNECT:true,
-							             SPEAK:true,
-							             MANAGE_CHANNEL:true,
-										 MUTE_MEMBERS:true,
-										 DEAFEN_MEMBERS:true,
-										 MOVE_MEMBERS:true,
-										 VIEW_CHANNEL:true
-						 })
-						               neww.setVoiceChannel(c)
-
-		})
-                                        client.channels.get(channel).overwritePermissions(neww, {
-										 CONNECT:false,
-							             SPEAK:false
-		})
-
-	}
-
-
-})
-
-})
-})
-}
-});
 
 
 
