@@ -39,6 +39,96 @@ var prefix = "$"
 
 
 
+const temp = {};
+client.on('message', async message => {
+if(message.channel.type === "dm") return;
+if(message.author.bot) return;
+  if(!temp[message.guild.id]) temp[message.guild.id] = {
+	time: "3000",
+	category : 'لانشاء روم باسمك',
+	channel : 'لانشاء روم باسمك'
+}
+      if(message.content.startsWith('$temp on')){
+          if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+  var ggg= message.guild.createChannel('لانشاء روم باسمك', 'category').then(cg => {
+   var ccc =message.guild.createChannel('لانشاء روم باسمك', 'voice').then(ch => {
+        ch.setParent(cg)
+    message.channel.send('**Done ,**')
+client.on('message' , message => {
+ if(message.content === '$temp off') {
+     if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+cg.delete()
+ch.delete()
+message.channel.send('**Done ,**')
+}
+});
+const time = temp[message.guild.id].time
+client.on('message' , message => {
+  if (message.content.startsWith(prefix + "temptime")) {
+    if(!message.member.hasPermission(`MANAGE_GUILD`)) return;
+    let newTime= message.content.split(' ').slice(1).join(" ")
+    if(!newTime) return message.reply(`**${prefix}temptime <time>  \`1000 = 1s\`**`)
+	if(isNaN(newTime)) return message.reply(`** The Time Be Nambers :face_palm: **`);
+	if(newTime < 1) return message.reply(`**The Time Be Up \`3000s\`**`)
+    temp[message.guild.id].time = newTime
+    message.channel.send(`**Temp Rooms Time Change To \`${newTime}\`**`);
+  }
+});
+    client.on('voiceStateUpdate', (old, neww) => {
+    let newUserChannel = neww.voiceChannel
+    let oldUserChannel = old.voiceChannel
+    temp[message.guild.id].category = cg.id
+    temp[message.guild.id].channel = ch.id
+    let channel = temp[message.guild.id].channel
+    let category = temp[message.guild.id].category
+    if(oldUserChannel === undefined && newUserChannel !== undefined && newUserChannel.id == channel) {
+        neww.guild.createChannel(neww.displayName , 'voice').then(c => {
+            c.setParent(category)
+  let scan = setTimeout(()=>{
+if(!neww.voiceChannel) {
+  c.delete();
+  client.channels.get(channel).overwritePermissions(neww, {
+										CONNECT:true,
+							             SPEAK:true
+		})
+}
+  }, temp[neww.guild.id].time);
+						 			 c.overwritePermissions(neww, {
+										 CONNECT:true,
+							             SPEAK:true,
+							             MANAGE_CHANNEL:true,
+										 MUTE_MEMBERS:true,
+										 DEAFEN_MEMBERS:true,
+										 MOVE_MEMBERS:true,
+										 VIEW_CHANNEL:true
+						 })
+						               neww.setVoiceChannel(c)
+
+		})
+                                        client.channels.get(channel).overwritePermissions(neww, {
+										 CONNECT:false,
+							             SPEAK:false
+		})
+
+	}
+
+
+})
+
+})
+})
+}
+});
+
+
+
+
+
+
+
+
+
+
 
 client.on('message' , message => {
 if(message.content === '$voice') {
@@ -365,26 +455,6 @@ let Embed = new Discord.RichEmbed()
 }); 
 
 
-
-
-client.on('message',async message => {
-  var prefix = "$";
-  if(message.content.startsWith(prefix + "setvoice")) {
-  if(!message.guild.member(message.author).hasPermissions('MANAGE_CHANNELS')) return message.reply(':x: **ليس لديك الصلاحيات الكافية**');
-  if(!message.guild.member(client.user).hasPermissions(['MANAGE_CHANNELS','MANAGE_ROLES_OR_PERMISSIONS'])) return message.reply(':x: **ليس معي الصلاحيات الكافية**');
-  message.channel.send(':white_check_mark:| **تم عمل الروم بنجاح**');
-  message.guild.createChannel(`Voice Online : [ ${message.guild.members.filter(m => m.voiceChannel).size} ]` , 'voice').then(c => {
-    console.log(`Voice online channel setup for guild: \n ${message.guild.name}`);
-    c.overwritePermissions(message.guild.id, {
-      CONNECT: false,
-      SPEAK: false
-    });
-    setInterval(() => {
-      c.setName(`Tops Online : [ ${message.guild.members.filter(m => m.voiceChannel).size} ]`)
-    },1000);
-  });
-  }
-});
 
 client.on('message',async message => {
   var time = moment().format('Do MMMM YYYY , hh:mm');
