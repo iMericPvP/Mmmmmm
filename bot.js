@@ -1383,7 +1383,8 @@ var jimp = require('jimp') //npm i jimp
      if(!welcomer) return;
 const w = ['./20180806_230413.png'];
  
-               let Image = Canvas.Image,
+              
+              let Image = Canvas.Image,
                   canvas = new Canvas(557, 241),
                   ctx = canvas.getContext('2d');
   
@@ -1394,39 +1395,26 @@ const w = ['./20180806_230413.png'];
                   ground.src = Background;
                   ctx.drawImage(ground, 0, 0, 557, 241);
       
+      })
       
-             
-           const millis = new Date().getTime() - member.user.createdAt.getTime();
-    const now = new Date();
-    const createdAt = millis / 1000 / 60 / 60 / 24;
-
- 
-                               let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
+                      let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
                       jimp.read(url, (err, ava) => {
                           if (err) return console.log(err);
                           ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
                               if (err) return console.log(err);
       
-                       
-                       
-                       
-                       
-                                               ctx.font = '15px Arial';
-                        ctx.fontSize = '20px';
-                        ctx.fillStyle = "#ffffff";
-                        ctx.textAlign = "center";
-                        ctx.fillText(`${createdAt.toFixed(0)}`, 135, 160); //shows username!
-                       
-                       ctx.font = '25px Arial Bold';
+                                    ctx.font = '25px Arial Bold';
                               ctx.fontSize = '20px';
                               ctx.fillStyle = "#FFFFFF";
                                 ctx.fillText(member.user.username, 300, 120);
-                           //NAMEً
+                              
+                              //NAMEً
                               ctx.font = '25px Arial';
                               ctx.fontSize = '28px';
                               ctx.fillStyle = "#FFFFFF";
       ctx.fillText(`Welcome To ${member.guild.name}`, 260, 60);
-                                      //AVATARً
+      
+                              //AVATARً
                               let Avatar = Canvas.Image;
                               let ava = new Avatar;
                               ava.src = buf;
@@ -1438,8 +1426,9 @@ const w = ['./20180806_230413.png'];
 
                         ctx.drawImage(ava, 49, 17, 200, 200);
                               ctx.closePath();
-               
-welcomer.sendFile(canvas.toBuffer())
+                            
+    welcomer.sendFile(canvas.toBuffer())
+      
  
  welcomer.send('**Welcome** ' + `${member}` + ' **To** ' + `**__${member.guild.name}__**` + ' **Server** :two_hearts:')                              
 
