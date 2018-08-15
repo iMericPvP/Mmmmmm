@@ -1381,7 +1381,7 @@ client.on('guildMemberAdd', member => {
 var jimp = require('jimp') //npm i jimp
      const welcomer =  member.guild.channels.find('name', 'welcome');
      if(!welcomer) return;
-const w = ['./w1.png'];
+const w = ['./20180806_230413.png'];
  
                let Image = Canvas.Image,
                   canvas = new Canvas(557, 241),
