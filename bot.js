@@ -1439,10 +1439,10 @@ const w = ['./20180806_230413.png'];
                         ctx.drawImage(ava, 49, 17, 200, 200);
                               ctx.closePath();
                
-welcomer.send('**Welcome** ' + `${member}` + ' **To** ' + `**__${member.guild.name}__**` + ' **Server** :two_hearts:')                              
 welcomer.sendFile(canvas.toBuffer())
  
- 
+ welcomer.send('**Welcome** ' + `${member}` + ' **To** ' + `**__${member.guild.name}__**` + ' **Server** :two_hearts:')                              
+
  
      
      
