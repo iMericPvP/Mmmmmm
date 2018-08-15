@@ -1379,7 +1379,7 @@ client.on('message',message =>{
 
     
 client.on("guildMemberAdd", member => {
-      let welcomer = member.guild.channels.find("name","hello");
+      let welcomer = member.guild.channels.find("name","welcome");
       //*let welcomer = member.guild.channels.find("name","welcome");
       if(!welcomer) return;
       if(welcomer) {
@@ -1388,7 +1388,7 @@ client.on("guildMemberAdd", member => {
        var Canvas = require('canvas')
       var jimp = require('jimp')
       
-      const w = ['./img/20180806_230413.png'];
+      const w = ['./20180806_230413.png'];
       
               let Image = Canvas.Image,
                   canvas = new Canvas(557, 241),
