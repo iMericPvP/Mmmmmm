@@ -91,9 +91,63 @@ message.channel.send(`This avatar For ${user} link : ${user.avatarURL}`);
     });
   }
 });
+client.on('message', message => {
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+const command = args.shift().toLowerCase();
+    if (command === "bans") {
+        message.delete(5000)
+         if(!message.guild.member(client.user).hasPermission("ADMINISTRATOR")) return message.reply("Error : \` I Dont Have ADMINISTRATOR Permission\`").then(message => message.delete(5000));
+        if(!message.member.hasPermission('ADMINISTRATOR')) return;
+        if(!message.channel.guild) return;
+        message.guild.fetchBans()
+        .then(bans => message.channel.send(`\`${bans.size}\` ***: عدد الاشخاص المحظورين من السيرفر ***`)).then(message => message.delete(5000))
+
+  .catch(console.error);
+}
+});
 
 
 
+
+client.on('message', message => {
+ const args = message.content.slice(prefix.length).trim().split(/ +/g);
+const command = args.shift().toLowerCase();
+if (message.author.bot) return;
+    if (command === 'mc') {
+                        if(!message.channel.guild) return;
+
+if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You Need MANAGE_MESSAGES Permission').then(message => message.delete(5000))
+           message.channel.overwritePermissions(message.guild.id, {
+         SEND_MESSAGES: false
+
+           }).then(() => {
+ const e = new Discord.RichEmbed()
+               .setAuthor('Channel Disabled By : '+message.author.username)
+                .setColor('#36393e')
+               
+               message.channel.send(e)
+               });
+             }
+if (command === "umc") {
+    
+    if(!message.channel.guild) return;
+
+if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You Need MANAGE_MESSAGES Permission').then(message => message.delete(5000))
+           message.channel.overwritePermissions(message.guild.id, {
+         SEND_MESSAGES: true
+
+           }).then(() => {
+               const e = new Discord.RichEmbed()
+               .setAuthor('Channel Enabled By : '+message.author.username)
+                        .setColor('#36393e')
+               
+               message.channel.send(e)
+           });
+             }
+
+
+
+});
 
 
 
@@ -965,5 +1019,439 @@ client.on('message',async message => {
   }
 });
 
+
+
+
+
+//================================
+
+client.on("guildCreate", guild => {
+var gimg;
+var gname;
+var gmemb;
+var groles;
+
+gname = guild.name;
+gimg = guild.iconURL;
+gmemb = guild.members.size;
+groles = guild.roles.map(r=> {return r.name});
+  let channel = client.channels.get('475883237001134110')
+const e = new Discord.RichEmbed()
+.setColor('#36393e')
+.addField('Bot Joined Guild : ', `${guild.name}`)
+.addField('Guild id : ', `${guild.id}`)
+.addField('Guild UserCount : ',gmemb = guild.members.size)
+.addField('Guild Owner : ', guild.owner)
+.setThumbnail(gimg)
+.setTimestamp()
+ channel.send(e);
+
+});
+
+
+client.on("guildDelete", guild => {
+var gimg;
+var gname;
+var gmemb;
+var groles;
+
+gname = guild.name;
+gimg = guild.iconURL;
+gmemb = guild.members.size;
+groles = guild.roles.map(r=> {return r.name});
+  let channel = client.channels.get('475883237001134110')
+const e = new Discord.RichEmbed()
+.setColor('#36393e')
+.addField('Bot Left Guild : ', `${guild.name}`)
+.addField('Guild id : ', `${guild.id}`)
+.addField('Guild UserCount : ',gmemb = guild.members.size)
+.addField('Guild Owner : ', guild.owner)
+.setThumbnail(gimg)
+.setTimestamp()
+ channel.send(e);
+
+});
+ 
+
+client.on('voiceStateUpdate', (oldM, newM) => {
+  let m1 = oldM.serverMute;
+  let m2 = newM.serverMute;
+
+  let d1 = oldM.serverDeaf;
+  let d2 = newM.serverDeaf;
+
+  let ch = oldM.guild.channels.find('name', 'log')
+  if(!ch) return;
+
+    oldM.guild.fetchAuditLogs()
+    .then(logs => {
+
+      let user = logs.entries.first().executor.username
+
+    if(m1 === false && m2 === true) {
+       let embed = new Discord.RichEmbed()
+       .setAuthor(`${newM.user.tag}`, newM.user.avatarURL)
+       .setDescription(`${newM} Has Been Voice Muted`)
+       .setFooter(`By : ${user}`)
+        .setColor('#36393e')
+
+       ch.send(embed)
+    }
+    if(m1 === true && m2 === false) {
+       let embed = new Discord.RichEmbed()
+       .setAuthor(`${newM.user.tag}`, newM.user.avatarURL)
+       .setDescription(`${newM} Has Been Voice UnMuted`)
+       .setFooter(`By : ${user}`)
+        .setColor('#36393e')
+       .setTimestamp()
+
+       ch.send(embed)
+    }
+    if(d1 === false && d2 === true) {
+       let embed = new Discord.RichEmbed()
+       .setAuthor(`${newM.user.tag}`, newM.user.avatarURL)
+       .setDescription(`${newM} Has Been Voice Deafened`)
+       .setFooter(`By : ${user}`)
+        .setColor('#36393e')
+       .setTimestamp()
+
+       ch.send(embed)
+    }
+    if(d1 === true && d2 === false) {
+       let embed = new Discord.RichEmbed()
+       .setAuthor(`${newM.user.tag}`, newM.user.avatarURL)
+       .setDescription(`${newM} Has Been Voice UnDeafened`)
+       .setFooter(`By : ${user}`)
+        .setColor('#36393e')
+       .setTimestamp()
+
+       ch.send(embed)
+    }
+  })
+})
+
+
+  client.on('messageUpdate', (message, newMessage) => {
+    if (message.content === newMessage.content) return;
+    if (!message || !message.id || !message.content || !message.guild || message.author.bot) return;
+    const channel = message.guild.channels.find('name', 'log');
+    if (!channel) return;
+ 
+    let embed = new Discord.RichEmbed()
+       .setAuthor(`${message.author.tag}`, message.author.avatarURL)
+       .setTitle('Message Edited')
+       .addField('Before Edit',`${message.cleanContent}`)
+       .addField('After Edit',`${newMessage.cleanContent}`)
+       .addField('Edit In',`<#${message.channel.id}>`)
+       .addField('By', `<@${message.author.id}> `)
+       .setColor('#36393e')
+       .setTimestamp();
+     channel.send({embed:embed});
+ 
+ 
+});
+ 
+client.on('guildMemberAdd', member => {
+    if (!member || !member.id || !member.guild) return;
+    const guild = member.guild;
+   
+    const channel = member.guild.channels.find('name', 'log');
+    if (!channel) return;
+    let memberavatar = member.user.avatarURL
+    const fromNow = moment(member.user.createdTimestamp).fromNow();
+    const isNew = (new Date() - member.user.createdTimestamp) < 900000 ? '🆕' : '';
+   
+    let embed = new Discord.RichEmbed()
+       .setAuthor(`${member.user.tag}`, member.user.avatarURL)
+       .setColor('#36393e')
+       .setDescription(` <@${member.user.id}> Joined To The Server`)
+       .setTimestamp();
+     channel.send({embed:embed});
+});
+ 
+client.on('guildMemberRemove', member => {
+    if (!member || !member.id || !member.guild) return;
+    const guild = member.guild;
+   
+    const channel = member.guild.channels.find('name', 'log');
+    if (!channel) return;
+    let memberavatar = member.user.avatarURL
+    const fromNow = moment(member.joinedTimestamp).fromNow();
+   
+    let embed = new Discord.RichEmbed()
+       .setAuthor(`${member.user.tag}`, member.user.avatarURL)
+       .setColor('#36393e')
+       .setDescription(` <@${member.user.id}> Left From The Server`)
+       .setTimestamp();
+     channel.send({embed:embed});
+});
+ 
+client.on('messageDelete', message => {
+    if (!message || !message.id || !message.content || !message.guild || message.author.bot) return;
+    const channel = message.guild.channels.find('name', 'log');
+    if (!channel) return;
+   
+    let embed = new Discord.RichEmbed()
+       .setAuthor(`${message.author.tag}`, message.author.avatarURL)
+             .setTitle('Message Deleted')
+       .addField('Deleted Message',`${message.cleanContent}`)
+       .addField('Deleted In',`<#${message.channel.id}>`)
+       .addField('By', `<@${message.author.id}> `)
+       .setColor('#36393e')
+       .setTimestamp();
+     channel.send({embed:embed});
+ 
+});
+
+     
+      client.on("roleDelete", role => {
+  client.setTimeout(() => {
+    role.guild.fetchAuditLogs({
+        limit: 1,
+        type: 30
+      })
+      .then(audit => {
+        let exec = audit.entries.map(a => a.executor.username)
+        try {
+
+          let log = role.guild.channels.find('name', 'log');
+          if (!log) return;
+          let embed = new Discord.RichEmbed()
+            .setColor('#36393e')          
+            .setTitle(' - Role Deleted ')
+            .addField('Role Name', role.name, true)
+            .addField('Role ID', role.id, true)
+            .addField('Role Color', role.hexColor, true)
+            .addField('Role Permission', role.permissions, true)
+            .addField('By', exec, true)
+            .setColor('#36393e') 
+            .setTimestamp()
+          log.send(embed).catch(e => {
+            console.log(e);
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      })
+  }, 1000)
+})
+
+
+client.on('roleCreate', role => {
+  client.setTimeout(() => {
+    role.guild.fetchAuditLogs({
+        limit: 1,
+        type: 30
+      })
+      .then(audit => {
+        let exec = audit.entries.map(a => a.executor.username)
+        try {
+
+          let log = role.guild.channels.find('name', 'log');
+          if (!log) return;
+          let embed = new Discord.RichEmbed()
+            .setTitle('+ Role Created')
+            .addField('Role Name', role.name, true)
+            .addField('Role ID', role.id, true)
+            .addField('Role Color', role.hexColor, true)
+            .addField('Role Permission', role.permissions, true)
+            .addField('By', exec, true)
+            .setColor('#36393e') 
+            .setTimestamp()
+          log.send(embed).catch(e => {
+            console.log(e);
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      })
+  }, 1000)
+})
+
+
+
+
+  client.on("guildBanAdd", (guild, member) => {
+  client.setTimeout(() => {
+    guild.fetchAuditLogs({
+        limit: 1,
+        type: 22
+      })
+      .then(audit => {
+        let exec = audit.entries.map(a => a.executor.username);
+        try {
+          let log = guild.channels.find('name', 'log');
+          if (!log) return;
+          client.fetchUser(member.id).then(myUser => {
+          let embed = new Discord.RichEmbed()
+        .setAuthor("Banned")
+	    .setColor('#36393e') 
+        .setThumbnail(myUser.avatarURL)
+        .addField('Banned User :',`**${myUser.username}**`,true)
+        .addField('Banned By :',`**${exec}**`,true)
+        .setFooter(myUser.username,myUser.avatarURL)
+            .setTimestamp();
+          log.send(embed).catch(e => {
+            console.log(e);
+          });
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      });
+  }, 1000);
+});
+
+
+
+    client.on("guildBanRemove", (guild, member) => {
+  client.setTimeout(() => {
+    guild.fetchAuditLogs({
+        limit: 1,
+        type: 22
+      })
+      .then(audit => {
+        let exec = audit.entries.map(a => a.executor.username);
+        try {
+          let log = guild.channels.find('name', 'log');
+          if (!log) return;
+          client.fetchUser(member.id).then(myUser => {
+          let embed = new Discord.RichEmbed()
+        .setAuthor("UnBanned")
+		.setColor('#36393e') 
+		 .setThumbnail(myUser.avatarURL)
+        .addField('UnBanned User',`**${myUser.username}**`,true)
+        .addField('UnBanned By',`**${exec}**`,true)
+        .setFooter(myUser.username,myUser.avatarURL)
+            .setTimestamp();
+          log.send(embed).catch(e => {
+            console.log(e);
+          });
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      });
+  }, 1000);
+});
+
+
+
+
+
+
+
+
+
+
+client.on('message',message =>{
+    var prefix = "+";
+    if(message.content.startsWith(prefix + 'top')) {
+  message.guild.fetchInvites().then(i =>{
+  var invites = [];
+   
+  i.forEach(inv =>{
+    var [invs,i]=[{},null];
+     
+    if(inv.maxUses){
+        invs[inv.code] =+ inv.uses+"/"+inv.maxUses;
+    }else{
+        invs[inv.code] =+ inv.uses;
+    }
+        invites.push(`invite: ${inv.url} inviter: ${inv.inviter} \`${invs[inv.code]}\`;`);
+   
+  });
+  var embed = new Discord.RichEmbed()
+  .setColor("#000000")
+  .setDescription(`${invites.join(`\n`)+'\n\n**By:** '+message.author}`)
+  .setThumbnail("https://i.imgur.com/GnR2unD.png")
+           message.channel.send({ embed: embed });
+   
+  });
+   
+    }
+  });
+
+
+
+
+
+client.on('guildMemberAdd', member => {
+	var Canvas = require('canvas') //npm i canvas
+var jimp = require('jimp') //npm i jimp
+     const welcomer =  member.guild.channels.find('name', 'welcome');
+     if(!welcomer) return;
+const w = ['./w1.png'];
+ 
+               let Image = Canvas.Image,
+                  canvas = new Canvas(557, 241),
+                  ctx = canvas.getContext('2d');
+  
+              fs.readFile(`${w[Math.floor(Math.random() * w.length)]}`, function (err, Background) {
+                  if (err) return console.log(err)
+                  let BG = Canvas.Image;
+                  let ground = new Image;
+                  ground.src = Background;
+                  ctx.drawImage(ground, 0, 0, 557, 241);
+      
+      
+             
+           const millis = new Date().getTime() - member.user.createdAt.getTime();
+    const now = new Date();
+    const createdAt = millis / 1000 / 60 / 60 / 24;
+
+ 
+                               let url = member.user.displayAvatarURL.endsWith(".webp") ? member.user.displayAvatarURL.slice(5, -20) + ".gif" : member.user.displayAvatarURL;
+                      jimp.read(url, (err, ava) => {
+                          if (err) return console.log(err);
+                          ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
+                              if (err) return console.log(err);
+      
+                       
+                       
+                       
+                       
+                                               ctx.font = '15px Arial';
+                        ctx.fontSize = '20px';
+                        ctx.fillStyle = "#ffffff";
+                        ctx.textAlign = "center";
+                        ctx.fillText(`${createdAt.toFixed(0)}`, 135, 160); //shows username!
+                       
+                       ctx.font = '25px Arial Bold';
+                              ctx.fontSize = '20px';
+                              ctx.fillStyle = "#FFFFFF";
+                                ctx.fillText(member.user.username, 300, 120);
+                           //NAMEً
+                              ctx.font = '25px Arial';
+                              ctx.fontSize = '28px';
+                              ctx.fillStyle = "#FFFFFF";
+      ctx.fillText(`Welcome To ${member.guild.name}`, 260, 60);
+                                      //AVATARً
+                              let Avatar = Canvas.Image;
+                              let ava = new Avatar;
+                              ava.src = buf;
+                              ctx.beginPath();
+                 ctx.arc(149, 118, 98, 0, Math.PI*2, true);
+                   ctx.closePath();
+                   
+                                 ctx.clip();
+
+                        ctx.drawImage(ava, 49, 17, 200, 200);
+                              ctx.closePath();
+               
+welcomer.send('**Welcome** ' + `${member}` + ' **To** ' + `**__${member.guild.name}__**` + ' **Server** :two_hearts:')                              
+welcomer.sendFile(canvas.toBuffer())
+ 
+ 
+ 
+     
+     
+                    
+     
+                   
+})
+})
+});                    
+});
 
 client.login(process.env.BOT_TOKEN);
