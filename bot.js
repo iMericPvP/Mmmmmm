@@ -1376,14 +1376,20 @@ client.on('message',message =>{
 
 
 
-client.on('guildMemberAdd', member => {
-	var Canvas = require('canvas') //npm i canvas
-var jimp = require('jimp') //npm i jimp
-     const welcomer =  member.guild.channels.find('name', 'welcome');
-     if(!welcomer) return;
-const w = ['./20180806_230413.png'];
- 
-              
+
+    
+client.on("guildMemberAdd", member => {
+      let welcomer = member.guild.channels.find("name","hello");
+      //*let welcomer = member.guild.channels.find("name","welcome");
+      if(!welcomer) return;
+      if(welcomer) {
+      
+         
+       var Canvas = require('canvas')
+      var jimp = require('jimp')
+      
+      const w = ['./img/20180806_230413.png'];
+      
               let Image = Canvas.Image,
                   canvas = new Canvas(557, 241),
                   ctx = canvas.getContext('2d');
