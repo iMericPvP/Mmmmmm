@@ -583,6 +583,82 @@ if(ra3d.content.startsWith(prefix + 'ccolors')) {
             }
        });
        
+
+client.on('message', message => {
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+const command = args.shift().toLowerCase();
+    if (command === "bans") {
+        message.delete(5000)
+         if(!message.guild.member(client.user).hasPermission("ADMINISTRATOR")) return message.reply("Error : \` I Dont Have ADMINISTRATOR Permission\`").then(message => message.delete(5000));
+        if(!message.member.hasPermission('ADMINISTRATOR')) return;
+        if(!message.channel.guild) return;
+        message.guild.fetchBans()
+        .then(bans => message.channel.send(`\`${bans.size}\` : عدد الاشخاص المحظورين من السيرفر `)).then(message => message.delete(5000))
+
+  .catch(console.error);
+}
+});
+
+
+
+
+
+
+
+
+ client.on('message',message =>{
+       const args = message.content.slice(prefix.length).trim().split(/ +/g);
+const command = args.shift().toLowerCase();
+if(command === 'myinv') {
+let guild = message.guild
+var codes = [""]
+ var nul = 0
+      
+guild.fetchInvites()
+.then(invites => {
+invites.forEach(invite => {
+if (invite.inviter === message.author) {
+    nul+=invite.uses
+codes.push(`discord.gg/${invite.code}`)
+}
+ 
+})
+  if (nul > 0) {
+      const e = new Discord.RichEmbed()
+      .addField(`${message.author.username}`, `لقد قمت بدعوة **${nul}** شخص`)
+      .setColor('#36393e')
+      message.channel.send(e)
+  }else {
+                       var embed = new Discord.RichEmbed()
+                        .setColor("#000000")
+                        .addField(`${message.author.username}`, `لم تقم بدعوة أي شخص لهذة السيرفر`)
+
+                       message.channel.send({ embed: embed });
+                        return;
+                    }
+}).then(m => {
+if (codes.length < 0) {
+    var embed = new Discord.RichEmbed()
+.setColor("#000000")
+.addField(`Your invite codes in ${message.guild.name}`, `You currently don't have any active invites! Please create an invite and start inviting, then you will be able to see your codes here!`)
+message.channel.send({ embed: embed });
+return;
+} else {
+    var embed = new Discord.RichEmbed()
+.setColor("#000000")
+.addField(`Your invite codes in ${message.guild.name}`, `Invite Codes :\n${codes.join("\n")}`)
+.setColor('#36393e')
+message.channel.send({ embed: embed });
+return;
+}
+})
+}
+
+});
+
+
+
+
        
        
        
