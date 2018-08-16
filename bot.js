@@ -53,7 +53,7 @@ var prefix = "$"
             message.channel.send(`تم أنشاء التذكره , #${c.name}.`);
             const embed = new Discord.RichEmbed()
                 .setColor(0xCF40FA)
-                .addField(` ${message.author.username}!`, `شكرًا لك على التواصل مع فريق الدعم! سنرد عليك في أقرب وقت ممكن..,`)
+                .addField(` ${message.author.username}!`, ` *** شكرًا لك على التواصل مع فريق الدعم! سنرد عليك في أقرب وقت ممكن.. *** `)
                 .setTimestamp();
             c.send({
                 embed: embed
@@ -64,7 +64,7 @@ var prefix = "$"
                         if (message.content.startsWith(prefix + "close")) {
         if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`لا يمكنك استخدام أمر الإغلاق خارج روم التذكره.`);
 
-        message.channel.send(`هل أنت متأكد من إغلآق التذكرة ؟, Type -confirm to close the ticket., لديك 10 ثوآني للتأكيد .`)
+        message.channel.send(` ***هل أنت متأكد من إغلآق التذكرة ؟, Type $confirm to close the ticket., لديك 10 ثوآني للتأكيد .***`)
             .then((m) => {
                 message.channel.awaitMessages(response => response.content === '$confirm', {
                         max: 1,
