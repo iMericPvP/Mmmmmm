@@ -34,11 +34,10 @@ var prefix = "$"
     
                         if (message.content.startsWith(prefix + "new")) {
         const reason = message.content.split(" ").slice(1).join(" ");
-        if (!message.guild.roles.exists("name", "Support Team")) return message.channel.send(`This server doesn't have a \`Support Team\` role made, so the ticket won't be opened.\nIf you are an administrator, make one with that name exactly and give it to users that should be able to see tickets.`);
-        if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.channel.send(`You already have a ticket open.`);
+        if (!message.guild.roles.exists("name", "Support Team")) return message.channel.send(`*** شكرًا لك على التواصل مع فريق الدعم! سنرد عليك في أقرب وقت ممكن ***`);
+        if (message.guild.channels.exists("name", "ticket-" + message.author.id)) return message.channel.send(`أنت لديك تذكره بلفعل`);
         message.guild.createChannel(`ticket-${message.author.id}`, "text").then(c => {
-            let role = message.guild.roles.find("name", "Support Team");
-            let role2 = message.guild.roles.find("name", "@everyone");
+            let role1 = message.guild.roles.find("name", "@everyone");
             c.overwritePermissions(role, {
                 SEND_MESSAGES: true,
                 READ_MESSAGES: true
@@ -51,7 +50,7 @@ var prefix = "$"
                 SEND_MESSAGES: true,
                 READ_MESSAGES: true
             });
-            message.channel.send(`:white_check_mark: Your ticket has been created, #${c.name}.`);
+            message.channel.send(` *** تم أنشاء التذكره باسم *** #${c.name}.`);
             const embed = new Discord.RichEmbed()
                 .setColor(0xCF40FA)
                 .addField(`Hey ${message.author.username}!`, `Please try explain why you opened this ticket with as much detail as possible. Our **Support Staff** will be here soon to help.`)
@@ -66,9 +65,9 @@ var prefix = "$"
                         if (message.content.startsWith(prefix + "close")) {
         if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
 
-        message.channel.send(`Are you sure? Once confirmed, you cannot reverse this action!\nTo confirm, type \`/confirm\`. This will time out in 10 seconds and be cancelled.`)
+        message.channel.send(`*** هل أنت متأكد من إغلآق التذكرة ؟, Type $confirm to close the ticket., لديك 10 ثوآني للتأكيد ***.`)
             .then((m) => {
-                message.channel.awaitMessages(response => response.content === '/confirm', {
+                message.channel.awaitMessages(response => response.content === '$confirm', {
                         max: 1,
                         time: 10000,
                         errors: ['time'],
@@ -77,7 +76,7 @@ var prefix = "$"
                         message.channel.delete();
                     })
                     .catch(() => {
-                        m.edit('Ticket close timed out, the ticket was not closed.').then(m2 => {
+                        m.edit('أنتهى الوقت لن يتم أغلاق لتذكره').then(m2 => {
                             m2.delete();
                         }, 3000);
                     });
