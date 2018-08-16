@@ -53,7 +53,7 @@ var prefix = "$"
             message.channel.send(`تم أنشاء التذكره , #${c.name}.`);
             const embed = new Discord.RichEmbed()
                 .setColor(0xCF40FA)
-                .addField(`Hey ${message.author.username}!`, `Please try explain why you opened this ticket with as much detail as possible. Our **Support Staff** will be here soon to help.`)
+                .addField(` ${message.author.username}!`, `شكرًا لك على التواصل مع فريق الدعم! سنرد عليك في أقرب وقت ممكن..,`)
                 .setTimestamp();
             c.send({
                 embed: embed
