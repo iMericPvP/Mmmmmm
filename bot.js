@@ -986,29 +986,6 @@ client.on('message', message => {
     
     
     
-    
-     client.on('guildCreate', guild => {
-         const embed = new Discord.RichEmbed()
-     .setColor("RED")
-     .setTitle('Click Here To Add Bot .!')
-     .setURL('https://discordapp.com/oauth2/authorize?client_id=474733285440749570&permissions=8&scope=bot')
-  .setDescription(`**
-  New Server Add Cozmo Bot ✅
-اسم السيرفر: ${guild.name}
-صاحب السيرفر: ${guild.owner}**`);
-client.channels.get("477397641689300992").sendEmbed(embed)
-});
-client.on('guildDelete', guild => {
-         const embed = new Discord.RichEmbed()
-     .setColor("GOLD")
-     .setTitle('Click Here To Add Bot .!')
-     .setURL('https://discordapp.com/oauth2/authorize?client_id=474733285440749570&permissions=8&scope=bot')
-  .setDescription(`**
-  Server Kicked Cozmo Bot :cry:
-اسم السيرفر: ${guild.name}
-صاحب السيرفر: ${guild.owner}**`);
-client.channels.get("477397641689300992").sendEmbed(embed)
-});
  
  
  
