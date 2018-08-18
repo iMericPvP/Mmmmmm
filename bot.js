@@ -1232,53 +1232,6 @@ client.on('message',async message => {
 
 //================================
 
-client.on("guildCreate", guild => {
-var gimg;
-var gname;
-var gmemb;
-var groles;
-
-gname = guild.name;
-gimg = guild.iconURL;
-gmemb = guild.members.size;
-groles = guild.roles.map(r=> {return r.name});
-  let channel = client.channels.get('475883237001134110')
-const e = new Discord.RichEmbed()
-.setColor('#36393e')
-.addField('Bot Joined Guild : ', `${guild.name}`)
-.addField('Guild id : ', `${guild.id}`)
-.addField('Guild UserCount : ',gmemb = guild.members.size)
-.addField('Guild Owner : ', guild.owner)
-.setThumbnail(gimg)
-.setTimestamp()
- channel.send(e);
-
-});
-
-
-client.on("guildDelete", guild => {
-var gimg;
-var gname;
-var gmemb;
-var groles;
-
-gname = guild.name;
-gimg = guild.iconURL;
-gmemb = guild.members.size;
-groles = guild.roles.map(r=> {return r.name});
-  let channel = client.channels.get('475883237001134110')
-const e = new Discord.RichEmbed()
-.setColor('#36393e')
-.addField('Bot Left Guild : ', `${guild.name}`)
-.addField('Guild id : ', `${guild.id}`)
-.addField('Guild UserCount : ',gmemb = guild.members.size)
-.addField('Guild Owner : ', guild.owner)
-.setThumbnail(gimg)
-.setTimestamp()
- channel.send(e);
-
-});
- 
 
 client.on('voiceStateUpdate', (oldM, newM) => {
   let m1 = oldM.serverMute;
