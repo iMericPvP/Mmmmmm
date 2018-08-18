@@ -41,21 +41,72 @@ client.users.forEach(m =>{
 m.sendMessage(args)
 })
 }});
-      client.on('guildCreate', guild => {
-client.channels.get("477397641689300992").send(`:white_check_mark: **${client.user.tag} دخل سيرفر جديد
-Server name: __${guild.name}__
-Server owner: __${guild.owner}__
-Server id: __${guild.id}__ 
-Server Count: __${guild.memberCount}__**`)
+client.on('message', message => {
+     if (message.author.bot) return;
+    if (message.content.startsWith("رابط")) {
+        message.channel.createInvite({
+        thing: true,
+        maxUses: 1,
+        maxAge: 3600,
+    }).then(invite =>
+      message.author.sendMessage(invite.url)
+    )
+    const embed = new Discord.RichEmbed()
+        .setColor("RANDOM")
+          .setDescription(" تم أرسال الرابط برسالة خاصة ")
+           .setAuthor(client.user.username, client.user.avatarURL)
+                 .setAuthor(client.user.username, client.user.avatarURL)
+                .setFooter('طلب بواسطة: ' + message.author.tag)
+
+      message.channel.sendEmbed(embed).then(message => {message.delete(10000)})
+              const Embed11 = new Discord.RichEmbed()
+        .setColor("RANDOM")
+        
+    .setDescription(" مدة الرابط : ساعه  عدد استخدامات الرابط : 1 ")
+      message.author.sendEmbed(Embed11)
+    }
 });
+
+
+
+
+
+
+
+ client.on('guildCreate', guild => {
+         const embed = new Discord.RichEmbed()
+     .setColor("RED")
+     .setTitle('Click Here To Add Bot .!')
+     .setURL('https://discordapp.com/oauth2/authorize?client_id=474733285440749570&permissions=8&scope=bot')
+  .setDescription(`**
+  New Server Add SLFSTR Bot ✅
+اسم السيرفر: ${guild.name}
+صاحب السيرفر: ${guild.owner}**`);
+client.channels.get("477397641689300992").sendEmbed(embed)
+});
+
+
+
+
+
+
+
+
+
+
+
 client.on('guildDelete', guild => {
-  client.channels.get("477397641689300992").send(`:negative_squared_cross_mark: **${client.user.tag} طلع من سيرفر
-Server name: __${guild.name}__
-Server owner: __${guild.owner}__
-Server id: __${guild.id}__ 
-Server Count: __${guild.memberCount}__**`)
+         const embed = new Discord.RichEmbed()
+     .setColor("GOLD")
+     .setTitle('Click Here To Add Bot .!')
+     .setURL('https://discordapp.com/oauth2/authorize?client_id=474733285440749570&permissions=8&scope=bot')
+  .setDescription(`**
+  Server Kicked SLFSTR Bot :cry:
+اسم السيرفر: ${guild.name}
+صاحب السيرفر: ${guild.owner}**`);
+client.channels.get("477397641689300992").sendEmbed(embed)
 });
-  
+ 
 
  
        client.on("message", (message) => {
