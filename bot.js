@@ -57,7 +57,7 @@ client.on('message', message => {
 });
 
   client.on('message', async message => {
-  if(message.content.startsWith(prefix + "رسالة")) {
+  if(message.content.startsWith(prefix + "slfstr")) {
     let i = client.users.size;
     if(message.author.id !== '463857132060540958') return message.channel.send('❎ » هذا الأمر مخصص لصاحب البوت فقط');
     var args = message.content.split(' ').slice(1).join(' ');
